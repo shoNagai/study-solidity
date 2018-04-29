@@ -42,8 +42,8 @@ contract CroudFunding {
     function fund() payable public {
         // キャンペーンが終わっていれば処理を中断
         require(!ended);
-        // 最低金額より下または目標金額より多ければ中断
-        require(minAmount <= msg.value && goalAmount >= msg.value);
+        // 最低金額より下または目標額を超えてしまう場合は中断
+        require(minAmount <= msg.value && goalAmount >= (totalAmount + msg.value));
         Investor storage inv = investors[numInvestors++];
         inv.addr = msg.sender;
         inv.amount = msg.value;
